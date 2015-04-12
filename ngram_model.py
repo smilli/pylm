@@ -1,7 +1,7 @@
-from language_model import LanguageModel
 from collections import defaultdict
 from itertools import islice, chain
-from util import ngram_cfd
+from pylm.language_model import LanguageModel
+from pylm.util import ngram_cfd, mle_cpd
 
 class NgramModel(LanguageModel):
     """Model that only uses highest order ngrams and no smoothing."""
@@ -17,7 +17,7 @@ class NgramModel(LanguageModel):
                      ['This', 'is', 'another', 'sentence']]
             n: [int] The highest order model to use. Ex: 3 for a trigram model.
         """
-        self.ngram_cfd = ngram_cfd(sentences, n)
+        self.ngram_cpd = mle_cpd(ngram_cfd(sentences, n))
         self.n = n
 
     def order(self):
@@ -40,8 +40,4 @@ class NgramModel(LanguageModel):
             context = ()
         else:
             context = tuple(context)
-        if context not in self.ngram_cfd:
-            return 0
-        pos_words = self.ngram_cfd[context]
-        pos_words_count = sum(pos_words.values())
-        return pos_words[word]/pos_words_count
+        return self.ngram_cpd[context][word]

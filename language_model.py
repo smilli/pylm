@@ -13,14 +13,14 @@ class LanguageModel:
         """
         raise NotImplementedError()
 
-    def prob(self, context, word):
+    def prob(self, word, context):
         """
         Get the probability of a word following a context.  i.e. The conditional
         probability P(word|context)
 
         Param:
+            word: [string] Word to find P(word|context) for.
             context: [iterable of strings] Sequence of tokens to use as context
                 for the word.
-            word: [string] Word to find P(word|context) for.
         """
         raise NotImplementedError()

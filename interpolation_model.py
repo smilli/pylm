@@ -1,7 +1,6 @@
-from language_model import LanguageModel
 from collections import defaultdict
-from itertools import islice, chain
-from util import ngram_cfd
+from pylm.language_model import LanguageModel
+from pylm.util import ngram_cfd, mle_cpd
 
 class InterpolationModel(LanguageModel):
     """Jelinek-Mercer smoothed n-gram model."""
@@ -31,7 +30,7 @@ class InterpolationModel(LanguageModel):
             raise InterpolationModelException(
                 'Weights must sum to 1 for a proper probability '
                 'distribution.')
-        self.ngram_cfd = ngram_cfd(sentences, n)
+        self.ngram_cpd = mle_cpd(ngram_cfd(sentences, n))
         self.n = n
         self.weights = model_weights
 
@@ -47,9 +46,9 @@ class InterpolationModel(LanguageModel):
         probability P(word|context)
 
         Param:
+            word: [string] Word to find P(word|context) for.
             context: [iterable of strings] Sequence of tokens to use as context
                 for the word.
-            word: [string] Word to find P(word|context) for.
         """
         if not context:
             context = ()
@@ -57,10 +56,7 @@ class InterpolationModel(LanguageModel):
             context = tuple(context)
         prob = 0
         for i in range(len(context) + 1):
-            pos_words = self.ngram_cfd[context[i:]]
-            pos_words_count = sum(pos_words.values())
-            if pos_words_count:
-                prob += self.weights[i] * (pos_words[word]/pos_words_count)
+            prob += self.weights[i] * self.ngram_cpd[context[i:]][word]
         return prob
 
 class InterpolationModelException(Exception):
