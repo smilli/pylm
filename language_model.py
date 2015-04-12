@@ -1,21 +1,9 @@
 class LanguageModel:
     """Abstract class for a Language Model."""
 
-    def __init__(self, sentences, n, pad_left=True, pad_right=False,
-            pad_symbol=''):
+    def __init__(self):
         """
         Construct LanguageModel.
-
-        Params:
-            sentences: [iterable of strings] Sequence of sequence of tokens that
-                make up a sentence.
-                Ex: [['This', 'is', 'a' 'sentence', '.'],
-                     ['This', 'is', 'another', 'sentence']]
-            n: [int] The highest order model to use. Ex: 3 for a trigram model.
-            pad_left: [bool] Whether to pad each sentence by n - 1 pad_symbol
-                tokens at the beginning of the sentence.
-            pad_right: [bool] Whether to pad each sentence by n - 1 pad_symbol
-                tokens at the end of the sentence.
         """
         raise NotImplementedError()
 
