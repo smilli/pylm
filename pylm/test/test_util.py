@@ -1,7 +1,19 @@
 import unittest
-from pylm.util import ngram_cfd
+from pylm.util import ngrams, ngram_cfd
 
 class TestNgrams(unittest.TestCase):
+
+    def test_ngrams(self):
+        sentence = ['My', 'favorite', 'anime', 'is', 'Code', 'Geass', '.']
+        sent_ngrams = list(ngrams(sentence, 3))
+        for s in ngrams(sentence, 3):
+            print(s)
+        self.assertEqual(len(sent_ngrams), len(sentence))
+        self.assertEqual(sent_ngrams,
+            [('', '', 'My'), ('', 'My', 'favorite'),
+            ('My', 'favorite', 'anime'), ('favorite', 'anime', 'is'),
+            ('anime', 'is', 'Code'), ('is', 'Code', 'Geass'),
+            ('Code', 'Geass', '.')])
 
     def test_ngram_cfd(self):
         sentences = [

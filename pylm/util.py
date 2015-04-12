@@ -1,8 +1,23 @@
 from collections import defaultdict
 
+def ngrams(sentence, n):
+    """
+    Compute n-grams on sentence for given n.
+
+    Params:
+        sentence: [iterable of strings] Sequence of tokens in sentence.
+        n: [int] the value of n to use for n-grams
+    """
+    ngram = ('',) * (n - 1)
+    for token in sentence:
+        ngram = ngram + (token,)
+        yield ngram
+        ngram = ngram[1:]
+
 def ngram_cfd(sentences, n):
     """
-    Compute n-grams for n ranging from 1 to highest_n.
+    Compute n-gram conditional frequency distribution for n
+    ranging from 1 to given n.
 
     Params:
         sentences: [iterable of strings] Sequence of sequence of tokens that
