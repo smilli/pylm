@@ -1,4 +1,4 @@
-from pylm.language_model import LanguageModel
+from pylm.lang_model import LanguageModel
 
 class CachedModel(LanguageModel):
 

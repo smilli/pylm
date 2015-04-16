@@ -1,7 +1,7 @@
 import unittest
-from pylm.interpolation_model import (
+from pylm.lang_model import (
         InterpolationModel, InterpolationModelException)
-from util import ngram_cfd, mle_cpd
+from pylm.util import ngram_cfd, mle_cpd
 
 class TestInterpolationModel(unittest.TestCase):
 

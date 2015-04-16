@@ -1,6 +1,6 @@
 import unittest
-from pylm.ngram_model import NgramModel
-from util import ngram_cfd, mle_cpd
+from pylm.lang_model import NgramModel
+from pylm.util import ngram_cfd, mle_cpd
 
 class TestNgramModel(unittest.TestCase):
 

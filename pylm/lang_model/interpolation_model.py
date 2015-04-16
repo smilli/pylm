@@ -1,5 +1,5 @@
 from collections import defaultdict
-from pylm.language_model import LanguageModel
+from pylm.lang_model import LanguageModel
 from pylm.util import ngram_cfd, mle_cpd
 
 class InterpolationModel(LanguageModel):

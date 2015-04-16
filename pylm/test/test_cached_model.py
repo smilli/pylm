@@ -1,6 +1,5 @@
 import unittest
-from pylm.interpolation_model import InterpolationModel
-from pylm.cached_model import CachedModel, CachedModelException
+from pylm.lang_model import InterpolationModel, CachedModel, CachedModelException
 from pylm.util import mle_pdist, mle_cpd, ngram_cfd
 
 class TestCachedModel(unittest.TestCase):

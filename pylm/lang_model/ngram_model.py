@@ -1,6 +1,6 @@
 from collections import defaultdict
 from itertools import islice, chain
-from pylm.language_model import LanguageModel
+from pylm.lang_model import LanguageModel
 from pylm.util import ngram_cfd, mle_cpd
 
 class NgramModel(LanguageModel):
