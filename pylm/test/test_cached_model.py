@@ -1,6 +1,7 @@
 import unittest
-from pylm.lang_model import InterpolationModel, CachedModel, CachedModelException
-from pylm.util import mle_pdist, mle_cpd, ngram_cfd
+from pylm.lang_model import (InterpolationModel, CachedModel,
+    CachedModelException, NgramModel)
+from pylm.util import mle_cpd, ngram_cfd
 
 class TestCachedModel(unittest.TestCase):
 
@@ -10,9 +11,10 @@ class TestCachedModel(unittest.TestCase):
             ['I', 'like', 'Python', '.']]
         ngram_cpd = mle_cpd(ngram_cfd(sentences, 2))
         model = InterpolationModel(ngram_cpd, 2, [0.75, 0.25])
-        cache_fdist = {'Python': 2, 'cats': 3}
-        cache_pdist = mle_pdist(cache_fdist)
-        cached_model = CachedModel(model, cache_pdist, 0.25)
+        cache_cfd = {}
+        cache_cfd[()] = {'Python': 2, 'cats': 3}
+        cache_lang_model = NgramModel(mle_cpd(cache_cfd), 1)
+        cached_model = CachedModel(model, cache_lang_model, 0.25)
         self.assertEqual(cached_model.prob('Python', ['like']),
                 0.75*(0.75*1 + 0.25*1/9) + 0.25*(2/5))
         self.assertEqual(cached_model.prob('.', ['like']),

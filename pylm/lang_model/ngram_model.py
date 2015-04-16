@@ -26,7 +26,10 @@ class NgramModel(LanguageModel):
     def prob(self, word, context=None):
         """
         Get the probability of a word following a context.  i.e. The conditional
-        probability P(word|context)
+        probability P(word|context).
+
+        If more that n - 1 words of context are provided, the context is
+        truncated to the last n - 1 words.
 
         Param:
             word: [string] Word to find P(word|context) for.
@@ -36,5 +39,7 @@ class NgramModel(LanguageModel):
         if not context:
             context = ()
         else:
+            if len(context) > self.n - 1:
+                context = context[(len(context) - self.n + 1):]
             context = tuple(context)
         return self.ngram_cpd[context][word]

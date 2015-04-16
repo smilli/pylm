@@ -12,10 +12,11 @@ class TestNgramModel(unittest.TestCase):
         model = NgramModel(ngram_cpd, 1)
         self.assertEqual(model.prob('I'), 1/9)
         self.assertEqual(model.prob('.'), 2/9)
-        self.assertEqual(model.prob('.', ['Python']), 0)
+        self.assertEqual(model.prob('.', ['Python']), 2/9)
         ngram_cpd = mle_cpd(ngram_cfd(sentences, 2))
         model = NgramModel(ngram_cpd, 2)
         self.assertEqual(model.prob('.', ['Python']), 1)
+        self.assertEqual(model.prob('.', ['like', 'Python']), 1)
 
 if __name__ == '__main__':
     unittest.main()
