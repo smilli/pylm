@@ -5,15 +5,12 @@ from pylm.util import ngram_cfd, mle_cpd
 class InterpolationModel(LanguageModel):
     """Jelinek-Mercer smoothed n-gram model."""
 
-    def __init__(self, sentences, n, model_weights):
+    def __init__(self, ngram_cpd, n, model_weights):
         """
         Construct InterpolationModel.
 
         Params:
-            sentences: [iterable of strings] Sequence of sequence of tokens that
-                make up a sentence.
-                Ex: [['This', 'is', 'a' 'sentence', '.'],
-                     ['This', 'is', 'another', 'sentence']]
+            ngram_cpd: [dict] Conditional probability distribution of ngrams.
             n: [int] The highest order model to use. Ex: 3 for a trigram model.
             model_weights: [list of ints] The constants to multiply the
                 probability of from each ngram model by.  Ordered by highest
@@ -30,7 +27,7 @@ class InterpolationModel(LanguageModel):
             raise InterpolationModelException(
                 'Weights must sum to 1 for a proper probability '
                 'distribution.')
-        self.ngram_cpd = mle_cpd(ngram_cfd(sentences, n))
+        self.ngram_cpd = ngram_cpd
         self.n = n
         self.weights = model_weights
 

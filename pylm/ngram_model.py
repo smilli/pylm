@@ -6,18 +6,15 @@ from pylm.util import ngram_cfd, mle_cpd
 class NgramModel(LanguageModel):
     """Model that only uses highest order ngrams and no smoothing."""
 
-    def __init__(self, sentences, n):
+    def __init__(self, ngram_cpd, n):
         """
         Construct NgramModel.
 
         Params:
-            sentences: [iterable of strings] Sequence of sequence of tokens that
-                make up a sentence.
-                Ex: [['This', 'is', 'a' 'sentence', '.'],
-                     ['This', 'is', 'another', 'sentence']]
+            ngram_cpd: [dict] Conditional probability distribution of ngrams.
             n: [int] The highest order model to use. Ex: 3 for a trigram model.
         """
-        self.ngram_cpd = mle_cpd(ngram_cfd(sentences, n))
+        self.ngram_cpd = ngram_cpd
         self.n = n
 
     def order(self):
